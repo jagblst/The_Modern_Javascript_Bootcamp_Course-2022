@@ -19,10 +19,12 @@ class Timer {
     }
     this.tick();
     this.interval = setInterval(this.tick, 20);
+    this.startButton.removeEventListener('click', this.start);
   };
 
   pause = () => {
     clearInterval(this.interval);
+    this.startButton.addEventListener('click', this.start);
   };
 
   tick = () => {
