@@ -1,7 +1,7 @@
 const { Engine, Render, Runner, World, Bodies, Body, Events } = Matter;
 
-const cellsHorizontal = 14;
-const cellsVertical = 10;
+const cellsHorizontal = 8;
+const cellsVertical = 8;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -194,19 +194,19 @@ World.add(world, ball);
 document.addEventListener('keydown', event => {
   const { x, y } = ball.velocity;
 
-  if (event.keyCode === 87) {
+  if (event.key === 'w' || event.key === 'W' || event.key === 'ArrowUp') {
     Body.setVelocity(ball, { x, y: y - 5 });
   }
 
-  if (event.keyCode === 68) {
+  if (event.key === 'd' || event.key === 'D' || event.key === 'ArrowRight') {
     Body.setVelocity(ball, { x: x + 5, y });
   }
 
-  if (event.keyCode === 83) {
+  if (event.key === 's' || event.key === 'S' || event.key === 'ArrowDown') {
     Body.setVelocity(ball, { x, y: y + 5 });
   }
 
-  if (event.keyCode === 65) {
+  if (event.key === 'a' || event.key === 'A' || event.key === 'ArrowLeft') {
     Body.setVelocity(ball, { x: x - 5, y });
   }
 });
@@ -221,6 +221,8 @@ Events.on(engine, 'collisionStart', event => {
       labels.includes(collision.bodyA.label) &&
       labels.includes(collision.bodyB.label)
     ) {
+      document.querySelector('.winner').classList.remove('hidden');
+      document.querySelector('.btn').classList.remove('hidden');
       world.gravity.y = 1;
       world.bodies.forEach(body => {
         if (body.label === 'wall') {
@@ -230,3 +232,8 @@ Events.on(engine, 'collisionStart', event => {
     }
   });
 });
+
+document.querySelector('.btn').addEventListener('click', () => window.location.reload());
+
+
+
